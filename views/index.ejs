@@ -8,13 +8,16 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
 </head>
 <body>
-    <form>
+    <form action="/data" method="post">
         <label for="nev">Kérem adja meg a nevét:</label><br>
-        <input type="text" name="nev"><br>
-        <label for="bankszamlaszam">Kérem adja meg a bankszámlaszámát:</label><br>
-        <input type="text" name="bankszamlaszam">
-        <p><input type="checkbox" name="elfogad">Elfogadom a szerződési feltételeket</p>
+        <input type="text" name="nev" value="<%= data.nev %>"><br>
+        <label for="bankSz">Kérem adja meg a bankszámlaszámát:</label><br>
+        <input type="text" name="bankSz" value="<%= data.bankSz %>">
+        <p><input type="checkbox" name="szerzFel" value="true">Elfogadom a szerződési feltételeket</p>
         <input type="submit" value="Megadom">
+        <% for (let e of errors){%>
+            <p style="color: red;"><%= e %></p>
+        <%}%>
     </form>
 </body>
 </html>

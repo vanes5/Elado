@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Render, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Elado } from './Elado.dto';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -20,14 +21,15 @@ export class AppController {
   @Post("data")
   data(@Body() Elado:Elado, @Res() response: Response){
     let errors = [];
+    console.log(Elado)
 
-    if(!Elado.nev || !Elado.bankSz){
+    if(Elado.nev == "" || Elado.bankSz == ""){
       errors.push("Minden mezőt ki kell tölteni!");
     }
     else if(!Elado.szerzFel){
       errors.push("Fogadja el a feltételeket!");
     }
-    else if(!/^\d{8}-\d{8}$/.test(Elado.bankSz) || !/^\d{8}-\d{8}-\d{8}$/.test(Elado.bankSz)){
+    else if(!/^\d{8}-\d{8}(-\d{8})?$/.test(Elado.bankSz)){
       errors.push("Nem megfelelő a bankszámlaszám formátuma!");
     }
 
@@ -42,9 +44,11 @@ export class AppController {
     }
 
     const Adatok: Elado = {
-      nev = Elado.nev,
-      bankSz = Elado.bankSz,
-      szerzFel = Elado.szerzFel? true:false
+      nev: Elado.nev,
+      bankSz: Elado.bankSz,
+      szerzFel: Elado.szerzFel
     }
+    this.#Elado.push(Adatok);
+    console.log(this.#Elado);
   }
 }
