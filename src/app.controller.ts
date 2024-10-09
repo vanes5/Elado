@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, Render, Res } from '@nestjs/common';
-import { AppService, FileService } from './app.service';
+import { AppService } from './app.service';
 import { Elado } from './Elado.dto';
 import { Response } from 'express';
+import { appendFile } from 'fs';
 
 
 @Controller()
@@ -51,6 +52,13 @@ export class AppController {
     }
     this.#Elado.push(Adatok);
     console.log(this.#Elado);
+    appendFile('eladok.csv', `${Elado.nev};${Elado.bankSz}\n`, (err) => {
+      if (err) {
+        console.error('Nem jo', err);
+      } else {
+        console.log('Adatok mentve');
+      }
+    });
     return response.redirect('/success')
   }
 
