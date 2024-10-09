@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, Render, Res } from '@nestjs/common';
-import { AppService } from './app.service';
+import { AppService, FileService } from './app.service';
 import { Elado } from './Elado.dto';
 import { Response } from 'express';
+
 
 @Controller()
 export class AppController {
@@ -50,5 +51,14 @@ export class AppController {
     }
     this.#Elado.push(Adatok);
     console.log(this.#Elado);
+    return response.redirect('/success')
+  }
+
+  @Get('success')
+  @Render('success')
+  rSuccess(){
+    return;
   }
 }
+
+
